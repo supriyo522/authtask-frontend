@@ -34,8 +34,8 @@
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5002/api/tasks';
-const AUTH_URL = 'http://localhost:5002/api/users/login';
+const API_URL = 'https://authtask-backend-1.onrender.com/api/tasks';
+const AUTH_URL = 'https://authtask-backend-1.onrender.com/api/users/login';
 
 const getToken = () => localStorage.getItem('token');
 
@@ -77,12 +77,12 @@ export const deleteTask = async (id) => {
 };
 
 export const register = async (credentials) => {
-    const response = await axios.post('http://localhost:5002/api/users/register', credentials);
+    const response = await axios.post('https://authtask-backend-1.onrender.com/api/users/register', credentials);
     return response.data;
 };
 
 export const login = async (credentials) => {
-    const response = await axios.post('http://localhost:5002/api/users/login', credentials);
+    const response = await axios.post('https://authtask-backend-1.onrender.com/api/users/login', credentials);
     const { token } = response.data;
     localStorage.setItem('token', token);
     return token;

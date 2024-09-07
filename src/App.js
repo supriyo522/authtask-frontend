@@ -19,6 +19,12 @@ const App = () => {
         setShowLogin(true);
     };
 
+    const handleLogout = () => {
+        setIsAuthenticated(false); // Reset authentication state
+        setShowRegister(false); // Optionally reset the state of the forms
+        setShowLogin(false);
+    };
+
     return (
         <div className="App">
             {!isAuthenticated && !showRegister && !showLogin && (
@@ -37,7 +43,12 @@ const App = () => {
                     <LoginPage onSuccess={handleLoginSuccess} />
                 </div>
             )}
-            {isAuthenticated && <TaskList />}
+            {isAuthenticated && (
+                <>
+                    <button onClick={handleLogout} style={styles.logoutButton}>Logout</button>
+                    <TaskList />
+                </>
+            )}
         </div>
     );
 };
@@ -52,6 +63,16 @@ const styles = {
         cursor: 'pointer',
         fontSize: '16px',
         margin: '10px',
+    },
+    logoutButton: {
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '4px',
+        backgroundColor: '#dc3545', // Red color for logout
+        color: '#fff',
+        cursor: 'pointer',
+        fontSize: '16px',
+        margin: '20px 0',
     },
 };
 

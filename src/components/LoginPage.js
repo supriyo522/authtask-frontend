@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { login } from '../api';
+import { auth, provider } from '../firebase'; // Ensure 'provider' is correct.
+import { signInWithPopup } from 'firebase/auth'; // Import the correct method for Firebase v9.
 
 const LoginPage = ({ onSuccess }) => {
     const [username, setUsername] = useState('');
@@ -8,6 +10,18 @@ const LoginPage = ({ onSuccess }) => {
     const handleLogin = async () => {
         await login({ username, password });
         onSuccess();
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider); // Correct Firebase v9 usage.
+            const user = result.user;
+            console.log('Google User:', user);
+            // Handle user authentication here (store token, etc.)
+            onSuccess();
+        } catch (error) {
+            console.error('Error logging in with Google:', error);
+        }
     };
 
     return (
@@ -28,6 +42,11 @@ const LoginPage = ({ onSuccess }) => {
                 style={styles.input}
             />
             <button onClick={handleLogin} style={styles.button}>Login</button>
+            
+            {/* Google Login Button */}
+            <button onClick={handleGoogleLogin} style={styles.googleButton}>
+                Login with Google
+            </button>
         </div>
     );
 };
@@ -63,8 +82,20 @@ const styles = {
         color: '#fff',
         cursor: 'pointer',
         fontSize: '16px',
+        margin: '10px 0',
+    },
+    googleButton: {
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '4px',
+        backgroundColor: '#DB4437', // Google's red color
+        color: '#fff',
+        cursor: 'pointer',
+        fontSize: '16px',
+        margin: '10px 0',
     },
 };
 
 export default LoginPage;
+
 

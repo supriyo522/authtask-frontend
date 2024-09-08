@@ -130,4 +130,3 @@ const styles = {
 export default Task;
 
 
-
